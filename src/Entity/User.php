@@ -5,11 +5,12 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
  */
-class User
+class User implements UserInterface, \Serializable
 {
     /**
      * @ORM\Id()
@@ -32,6 +33,12 @@ class User
      * @ORM\Column(type="string", length=255)
      */
     private $email;
+
+    /**
+     * @Assert\NotBlank
+     * @Assert\Length(max=4096)
+     */
+    private $plainPassword;
 
     /**
      * @ORM\Column(type="string", length=255)
@@ -99,6 +106,22 @@ class User
         return $this;
     }
 
+    /**
+     * @return mixed
+     */
+    public function getPlainPassword()
+    {
+        return $this->plainPassword;
+    }
+
+    /**
+     * @param mixed $plainPassword
+     */
+    public function setPlainPassword($plainPassword): void
+    {
+        $this->plainPassword = $plainPassword;
+    }
+
     public function getPassword(): ?string
     {
         return $this->password;
@@ -164,5 +187,54 @@ class User
         }
 
         return $this;
+    }
+
+    //
+
+    public function getRoles()
+    {
+        if($this->admin)
+            return ['ROLE_ADMIN'];
+        else
+            return ['ROLE_USER'];
+    }
+
+    public function getSalt()
+    {
+        return null;
+    }
+
+    public function eraseCredentials()
+    {
+        // TODO: Implement eraseCredentials() method.
+    }
+
+    public function getUsername()
+    {
+        return $this->email;
+    }
+
+    public function serialize()
+    {
+        return serialize([
+            $this->id,
+            $this->firstName,
+            $this->lastName,
+            $this->email,
+            $this->password,
+            $this->admin
+        ]);
+    }
+
+    public function unserialize($serialized)
+    {
+        list (
+            $this->id,
+            $this->firstName,
+            $this->lastName,
+            $this->email,
+            $this->password,
+            $this->admin
+            ) = unserialize($serialized, ['allowed_classes' => false]);
     }
 }
