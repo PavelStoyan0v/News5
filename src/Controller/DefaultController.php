@@ -15,7 +15,7 @@ use App\Entity\Category;
 class DefaultController extends AbstractController
 {
     /**
-     * @Route("/", name="home")
+     * @Route("/", name="homepage")
      */
     public function home()
     {
@@ -23,5 +23,4 @@ class DefaultController extends AbstractController
         $categories = $categoryRepository->findAll();
         return $this->render("home.html.twig", ["categories" => $categories]);
     }
-
 }
