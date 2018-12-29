@@ -32,7 +32,7 @@ class User implements UserInterface, \Serializable
     private $lastName;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, unique=true)
      */
     private $email;
 
@@ -196,7 +196,7 @@ class User implements UserInterface, \Serializable
     public function getRoles()
     {
         if($this->admin)
-            return ['ROLE_ADMIN'];
+            return ['ROLE_ADMIN', 'ROLE_USER'];
         else
             return ['ROLE_USER'];
     }
