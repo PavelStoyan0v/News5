@@ -11,6 +11,7 @@ namespace App\Controller;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use App\Entity\Category;
+use App\Entity\Article;
 
 class DefaultController extends AbstractController
 {
@@ -21,6 +22,10 @@ class DefaultController extends AbstractController
     {
         $categoryRepository = $this->getDoctrine()->getRepository(Category::class);
         $categories = $categoryRepository->findAll();
-        return $this->render("home.html.twig", ["categories" => $categories]);
+
+        $articleRepository = $this->getDoctrine()->getRepository(Article::class);
+        $articles = $articleRepository->findAll();
+
+        return $this->render("home.html.twig", ["categories" => $categories, "articles" => $articles]);
     }
 }

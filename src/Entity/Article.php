@@ -49,6 +49,17 @@ class Article
      */
     private $comments;
 
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $featured;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Category", inversedBy="articles")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $category;
+
     public function __construct()
     {
         $this->comments = new ArrayCollection();
@@ -120,6 +131,22 @@ class Article
     }
 
     /**
+     * @return mixed
+     */
+    public function getFeatured()
+    {
+        return $this->featured;
+    }
+
+    /**
+     * @param mixed $featured
+     */
+    public function setFeatured($featured): void
+    {
+        $this->featured = $featured;
+    }
+
+    /**
      * @return Collection|Comment[]
      */
     public function getComments(): Collection
@@ -146,6 +173,18 @@ class Article
                 $comment->setArticle(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getCategory(): ?Category
+    {
+        return $this->category;
+    }
+
+    public function setCategory(?Category $category): self
+    {
+        $this->category = $category;
 
         return $this;
     }
