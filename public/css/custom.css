@@ -1,0 +1,36 @@
+.custom-image {
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+}
+
+.top-post-left {
+    overflow: hidden;
+}
+
+.custom-image:hover {
+    background-size: 110%;
+}
+
+#logo {
+    max-height: 60px;
+}
+
+.logo-wrap {
+    padding: 15px 0px;
+}
+
+.image-div {
+    background-repeat: no-repeat;
+    background-position: center;
+    -webkit-background-size: cover;
+    background-size: cover;
+}
+
+.image-div img {
+    visibility: hidden;
+}
+
+.image-div:hover {
+    background-size: 105%;
+}

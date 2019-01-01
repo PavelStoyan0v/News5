@@ -60,6 +60,11 @@ class Article
      */
     private $category;
 
+    /**
+     * @ORM\Column(type="string", length=400)
+     */
+    private $summary;
+
     public function __construct()
     {
         $this->comments = new ArrayCollection();
@@ -185,6 +190,18 @@ class Article
     public function setCategory(?Category $category): self
     {
         $this->category = $category;
+
+        return $this;
+    }
+
+    public function getSummary(): ?string
+    {
+        return $this->summary;
+    }
+
+    public function setSummary(string $summary): self
+    {
+        $this->summary = $summary;
 
         return $this;
     }
