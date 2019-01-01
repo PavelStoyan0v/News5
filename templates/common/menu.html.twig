@@ -3,17 +3,10 @@
     <nav id="nav-menu-container">
       <ul class="nav-menu">
         <li class="menu-active"><a href="/">Home</a></li>
-        <ul>
-          <li><a href="standard-post.html">Standard Post</a></li>
-          <li><a href="image-post.html">Image Post</a></li>
-          <li><a href="gallery-post.html">Gallery Post</a></li>
-          <li><a href="video-post.html">Video Post</a></li>
-          <li><a href="audio-post.html">Audio Post</a></li>
-        </ul>
         <li class="menu-has-children"><a href="">Categories</a>
           <ul>
             {% for category in categories %}
-              <li><a href="articles/category/{{ category.id }}">{{ category.name }}</a></li>
+              <li><a href="/category/{{ category.id }}">{{ category.name }}</a></li>
             {% else %}
               No categories have been found.
             {% endfor %}

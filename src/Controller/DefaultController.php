@@ -15,7 +15,6 @@ use App\Entity\Article;
 
 class DefaultController extends AbstractController
 {
-    private $featuredPerPage = 4;
     /**
      * @Route("/", name="homepage")
      */
@@ -26,7 +25,7 @@ class DefaultController extends AbstractController
 
         $articleRepository = $this->getDoctrine()->getRepository(Article::class);
         $articles = $articleRepository->findBy([],['date' => 'DESC']);
-        $featured = $articleRepository->findBy(['featured' => true], ['date' => 'DESC'], $this->featuredPerPage);
+        $featured = $articleRepository->findBy(['featured' => true], ['date' => 'DESC'], 4 /* featured per page TODO: make it into a config file */);
 
         return $this->render('home.html.twig', ['categories' => $categories, 'articles' => $articles, 'featured' => $featured]);
     }

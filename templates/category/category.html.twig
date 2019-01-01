@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="zxx" class="no-js">
+<head>
+    {{ include('common/head.html.twig') }}
+</head>
+
+<body>
+<header>
+
+    {{ include('common/header-top.html') }}
+
+    {{ include('common/logo-wrap.html') }}
+
+    {{ include('common/menu.html.twig') }}
+</header>
+
+<div class="site-main-container">
+    <!-- Start latest-post Area -->
+    <section class="latest-post-area pb-120">
+        <div class="container no-padding">
+            <div class="row">
+                <div class="col-lg-8 post-list">
+                    <!-- Start latest-post Area -->
+                    <div class="latest-post-wrap">
+                        <h4 class="cat-title" style="background-color:#f6214b">Category - {{ category.name }}</h4>
+                        {% for article in articles %}
+                            <div class="single-latest-post row align-items-center">
+                                <div class="col-lg-5 post-left">
+                                    <div class="feature-img relative">
+                                        <div class="overlay overlay-bg"></div>
+                                        {% if article.imageUrl == null %}
+                                            <img class="img-fluid" src="img/defaultnews.jpg" alt="">
+                                        {% else %}
+                                            <img class="img-fluid" src="{{ article.imageUrl }}" alt="">
+                                        {% endif %}
+                                    </div>
+                                    <ul class="tags">
+                                        <li><a href="category/{{ article.category.id }}">{{ article.category.name }}</a></li>
+                                    </ul>
+                                </div>
+                                <div class="col-lg-7 post-right">
+                                    <a href="article/{{ article.id }}">
+                                        <h4>{{ article.title }}</h4>
+                                    </a>
+                                    <ul class="meta">
+                                        <li><a href="author/{{ article.author.id }}"><span class="lnr lnr-user"></span>{{ article.author.firstName }} {{ article.author.lastName }}</a></li>
+                                        <li><span class="lnr lnr-calendar-full"></span>{{ article.date|date("d M H:i") }}</li>
+                                        <li><a href="article/{{ article.id }}#comments"><span class="lnr lnr-bubble"></span>{{ article.comments|length }} {% if article.comments|length == 1 %} Comment {% else %} Comments {% endif %}</a></li>
+                                    </ul>
+                                    <div class="excert">
+                                        {{ article.summary|raw }}
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                    <!-- End latest-post Area -->
+                </div>
+                <div class="col-lg-4">
+                    <div class="sidebars-area">
+                        {{ include('common/featured.html.twig') }}
+                        {{ include('common/newsletter.html.twig') }}
+                        {{ include('common/social-widget.html') }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- End latest-post Area -->
+</div>
+
+<!-- start footer Area -->
+{{ include('common/footer.html') }}
+<!-- End footer Area -->
+{{ include('common/js.html') }}
+</body>
+
+</html>

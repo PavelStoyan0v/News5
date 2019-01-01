@@ -1,0 +1,46 @@
+{% if featured != null %}
+<div class="single-sidebar-widget editors-pick-widget">
+  <h6 class="title">Featured</h6>
+  <div class="editors-pick-post">
+    <div class="feature-img-wrap relative">
+      <div class="feature-img relative">
+        <div class="overlay overlay-bg"></div>
+        <div class="image-div" style="background-image:url({{ featured[0].imageUrl }})">
+          <img class="img-fluid" src="/img/e1.jpg">
+        </div>
+      </div>
+      <ul class="tags">
+        <li><a href="/category/{{ featured[0].category.id }}">{{ featured[0].category.name }}</a></li>
+      </ul>
+    </div>
+    <div class="details">
+      <a href="/article/{{ featured[0].id }}">
+        <h4 class="mt-20">{{ featured[0].title }}</h4>
+      </a>
+      <ul class="meta">
+        <li><a href="/author/{{ featured[0].author.id }}"><span class="lnr lnr-user"></span>{{ featured[0].author.firstName }} {{ featured[0].author.lastName }}</a></li>
+        <li><span class="lnr lnr-calendar-full"></span>{{ featured[0].date|date("d M H:i") }}</li>
+        <li><a href="/article/{{ featured[0].id }}#comments"><span class="lnr lnr-bubble"></span>{{ featured[0].comments|length }}</a></li>
+      </ul>
+      <p class="excert">
+        {{ featured[0].summary|raw }}
+      </p>
+    </div>
+    <div class="post-lists">
+      {% for article in featured|slice(1) %}
+      <div class="single-post d-flex flex-row">
+        <div class="detail">
+          <a href="/article/{{ article.id }}">
+            <h6>{{ article.title }}</h6>
+          </a>
+          <ul class="meta">
+            <li><span class="lnr lnr-calendar-full"></span>{{ article.date|date("d M H:i") }}</li>
+            <li><a href="/article/{{ article.id }}#comments"><span class="lnr lnr-bubble"></span>{{ article.comments|length }} {% if featured[0].comments|length == 1 %} Comment {% else %} Comments {% endif %}</a></li>
+          </ul>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+{% endif %}
