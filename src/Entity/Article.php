@@ -65,6 +65,16 @@ class Article
      */
     private $summary;
 
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $published;
+
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $embargo;
+
     public function __construct()
     {
         $this->comments = new ArrayCollection();
@@ -202,6 +212,30 @@ class Article
     public function setSummary(string $summary): self
     {
         $this->summary = $summary;
+
+        return $this;
+    }
+
+    public function getPublished(): ?bool
+    {
+        return $this->published;
+    }
+
+    public function setPublished(bool $published): self
+    {
+        $this->published = $published;
+
+        return $this;
+    }
+
+    public function getEmbargo(): ?\DateTimeInterface
+    {
+        return $this->embargo;
+    }
+
+    public function setEmbargo(\DateTimeInterface $embargo): self
+    {
+        $this->embargo = $embargo;
 
         return $this;
     }
