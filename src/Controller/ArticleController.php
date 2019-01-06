@@ -44,7 +44,7 @@ class ArticleController extends AbstractController
         $articleRepository = $this->getDoctrine()->getRepository(Article::class);
         $articles = $articleRepository->findAll();
 
-        return $this->render('admin/articles.html.twig', [
+        return $this->render('admin/article/articles.html.twig', [
             'articles' => $articles
         ]);
     }
@@ -52,17 +52,57 @@ class ArticleController extends AbstractController
     /**
      * @Route("/admin/articles/edit/{id}")
      */
-    public function edit($id)
+    public function edit($id, Request $request, UserInterface $user)
     {
-        $categoryRepository = $this->getDoctrine()->getRepository(Category::class);
         $articleRepository = $this->getDoctrine()->getRepository(Article::class);
         $article = $articleRepository->find($id);
-        $categories = $categoryRepository->findAll();
 
-        return $this->render('admin/article-edit.html.twig', [
-            'categories' => $categories,
-            'article' => $article
+        $form = $this->createForm(ArticleType::class, $article);
+        $form->handleRequest($request);
+
+        if($form->isSubmitted() && $form->isValid()) {
+            /** @var UploadedFile $file */
+            $file = $form->get('image')->getData();
+
+            if($file) {
+                $fileName = $this->generateUniqueFileName() . '.' . $file->guessExtension();
+
+                try {
+                    $file->move($this->getParameter('image_directory'), $fileName);
+                } catch (FileException $e) {
+                    // TODO: handle exception
+                }
+                $article->setImage($fileName);
+            }
+
+            $article->setDate(new DateTime());
+
+
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($article);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('adminArticles');
+        }
+
+        return $this->render('admin/article/article-new.html.twig',[
+            'form' => $form->createView()
         ]);
+    }
+
+    /**
+     * @Route("/admin/articles/delete/{id}")
+     */
+    public function delete($id)
+    {
+        $articleRepository = $this->getDoctrine()->getRepository(Article::class);
+        $article = $articleRepository->find($id);
+        $entityManager = $this->getDoctrine()->getManager();
+
+        $entityManager->remove($article);
+        $entityManager->flush();
+
+        return $this->redirectToRoute('adminArticles');
     }
 
     /**
@@ -99,13 +139,38 @@ class ArticleController extends AbstractController
             return $this->redirectToRoute('adminArticles');
         }
 
-        $categoryRepository = $this->getDoctrine()->getRepository(Category::class);
-        $categories = $categoryRepository->findAll();
-
-        return $this->render('admin/article-new.html.twig',[
-            'categories' => $categories,
+        return $this->render('admin/article/article-new.html.twig',[
             'form' => $form->createView()
         ]);
+    }
+
+    /**
+     * @Route("/admin/articles/publish", name="adminPublish")
+     */
+    public function publish()
+    {
+        $articleRepository = $this->getDoctrine()->getRepository(Article::class);
+        $articles = $articleRepository->findBy(['published' => false], ['date' => 'DESC']);
+
+        return $this->render('admin/article/publish.html.twig', [
+            'articles' => $articles
+        ]);
+    }
+
+    /**
+     * @Route("/admin/articles/publish/{id}")
+     */
+    public function publishArticle($id) {
+        $entityManager = $this->getDoctrine()->getManager();
+        $articleRepository = $this->getDoctrine()->getRepository(Article::class);
+        $article = $articleRepository->find($id);
+
+        $article->setPublished(true);
+
+        $entityManager->persist($article);
+        $entityManager->flush();
+
+        return $this->redirectToRoute('adminPublish');
     }
 
     /**

@@ -22,7 +22,7 @@ class ArticleType extends AbstractType
         $builder
             ->add('title', TextType::class)
             ->add('content', TextareaType::class)
-            ->add('image', FileType::class)
+            ->add('image', FileType::class, ['required' => false])
             ->add('featured', CheckboxType::class, ['required' => false])
             ->add('summary', TextareaType::class)
             ->add('published', CheckboxType::class, ['required' => false])

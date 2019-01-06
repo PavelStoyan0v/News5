@@ -30,4 +30,17 @@ class CategoryController extends AbstractController
             'categories' => $categories
         ]);
     }
+
+    /**
+     * @Route("/admin/categories", name="adminCategories")
+     */
+    public function categories()
+    {
+        $categoryRepository = $this->getDoctrine()->getRepository(Category::class);
+        $categories = $categoryRepository->findAll();
+
+        return $this->render('admin/category/categories.html.twig', [
+            'categories' => $categories
+        ]);
+    }
 }
