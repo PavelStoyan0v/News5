@@ -1,0 +1,82 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block includes %}
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js"></script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.11/summernote-bs4.css" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.11/summernote-bs4.js"></script>
+{% endblock includes %}
+
+{% block content %}
+  <div class="bgc-white p-20 bd">
+    <h6 class="c-grey-900">New Article</h6>
+    <div class="mT-30">
+      <form>
+        <div class="form-row">
+          <div class="form-group col-md-12">
+            <label for="title">Title</label>
+            <input name="title" type="text" class="form-control" id="title" placeholder="Who did what?">
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group col-md-12">
+            <label for="summernote">Article Content</label>
+            <div id="summernote"></div>
+            <script>
+                $('#summernote').summernote({
+                    placeholder: 'Your article content',
+                    tabsize: 2,
+                    height: 300
+                });
+            </script>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group col-md-12">
+            <label for="summary">Short summary for your article</label>
+            <textarea name="summary" class="form-control" id="summary" rows="3"></textarea>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group col-md-12">
+            <label for="cateogory">Category</label>
+            <select name="category" id="cateogory" class="form-control">
+              <option selected="selected">Choose...</option>
+              {% for category in categories %}
+                <option value="{{ category.id }}">{{ category.name }}</option>
+              {% endfor %}
+            </select>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group col-md-12">
+            <label for="embargo" class="col-form-label">Embargo (Leave default for instant publish)</label>
+            <input class="form-control" type="datetime-local" value="2012-12-12T12:12:00" id="embargo">
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group col-md-12">
+            <label for="thumbnail">Choose a thumbnail for your article</label>
+            <input name="thumbnail" type="file" class="form-control-file" id="thumbnail">
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="checkbox checkbox-circle checkbox-info peers ai-c">
+            <input type="checkbox" id="featured" name="featured">
+            <label for="featured" class="peers peer-greed js-sb ai-c">
+              <span class="peer peer-greed">Featured</span></label>
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="checkbox checkbox-circle checkbox-info peers ai-c">
+            <input checked="checked" type="checkbox" id="published" name="published">
+            <label for="published" class="peers peer-greed js-sb ai-c">
+              <span class="peer peer-greed">Published (Overrides Embargo. Uncheck to be able to publish your article later.)</span></label>
+          </div>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+      </form>
+    </div>
+  </div>
+{% endblock content %}
