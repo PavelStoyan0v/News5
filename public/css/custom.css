@@ -34,3 +34,18 @@
 .image-div:hover {
     background-size: 105%;
 }
+
+form[name="article"] {
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+form[name="article"] button {
+    width: 100%;
+    font-size: 110%;
+    font-weight: bold;
+}
+
+.h-article {
+    text-align: center;
+}

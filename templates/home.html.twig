@@ -23,12 +23,12 @@
           <div class="col-lg-8 top-post-left">
             <div class="feature-image-thumb relative custom-image">
               <div class="overlay overlay-bg"></div>
-                {% if articles[0].imageUrl == null %}
-                  <div class="image-div" style="background-image:url(img/defaultnews0.jpg)">
+                {% if articles[0].image == null %}
+                  <div class="image-div" style="background-image:url(/img/defaultnews0.jpg)">
                     <img style="visibility: hidden" class="img-fluid" src="img/defaultnews0.jpg">
                   </div>
                 {% else %}
-                  <div class="image-div" style="background-image:url({{ articles[0].imageUrl }})">
+                  <div class="image-div" style="background-image:url({{ image_directory }}{{ articles[0].image }})">
                     <img style="visibility: hidden" class="img-fluid" src="img/defaultnews0.jpg">
                   </div>
                 {% endif %}
@@ -51,13 +51,13 @@
             <div class="single-top-post">
               <div class="feature-image-thumb relative">
                 <div class="overlay overlay-bg"></div>
-                  {% if articles[1].imageUrl == null %}
-                    <div class="image-div" style="background-image:url(img/defaultnews1.jpg)">
+                  {% if articles[1].image == null %}
+                    <div class="image-div" style="background-image:url(/img/defaultnews1.jpg)">
                       <img style="visibility: hidden" class="img-fluid" src="img/defaultnews1.jpg">
                     </div>
                   {% else %}
-                    <div class="image-div" style="background-image:url({{ articles[1].imageUrl }})">
-                      <img style="visibility: hidden" class="img-fluid" src="img/defaultnews1.jpg">
+                    <div class="image-div" style="background-image:url({{ image_directory }}{{ articles[1].image }})">
+                      <img style="visibility: hidden" class="img-fluid" src="/img/defaultnews1.jpg">
                     </div>
                   {% endif %}
               </div>
@@ -78,13 +78,13 @@
             <div class="single-top-post mt-10">
               <div class="feature-image-thumb relative">
                 <div class="overlay overlay-bg"></div>
-                  {% if articles[2].imageUrl == null %}
-                    <div class="image-div" style="background-image:url(img/defaultnews1.jpg)">
-                      <img style="visibility: hidden" class="img-fluid" src="img/defaultnews1.jpg">
+                  {% if articles[2].image == null %}
+                    <div class="image-div" style="background-image:url(/img/defaultnews1.jpg)">
+                      <img style="visibility: hidden" class="img-fluid" src="/img/defaultnews1.jpg">
                     </div>
                   {% else %}
-                    <div class="image-div" style="background-image:url({{ articles[2].imageUrl }})">
-                      <img style="visibility: hidden" class="img-fluid" src="img/defaultnews1.jpg">
+                    <div class="image-div" style="background-image:url({{ image_directory }}{{ articles[2].image }})">
+                      <img style="visibility: hidden" class="img-fluid" src="/img/defaultnews1.jpg">
                     </div>
                   {% endif %}
               </div>
@@ -125,10 +125,10 @@
                     <div class="col-lg-5 post-left">
                       <div class="feature-img relative">
                         <div class="overlay overlay-bg"></div>
-                        {% if article.imageUrl == null %}
-                          <img class="img-fluid" src="img/defaultnews.jpg" alt="">
+                        {% if article.image == null %}
+                          <img class="img-fluid" src="/img/defaultnews.jpg">
                         {% else %}
-                          <img class="img-fluid" src="{{ article.imageUrl }}" alt="">
+                          <img class="img-fluid" src="{{ image_directory }}{{ article.image }}">
                         {% endif %}
                       </div>
                       <ul class="tags">

@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -29,9 +30,10 @@ class Article
     private $content;
 
     /**
-     * @ORM\Column(type="text", nullable=true)
+     * @ORM\Column(type="string", nullable=true)
+     * @Assert\File(mimeTypes={ "image/png", "image/jpeg" })
      */
-    private $imageUrl;
+    private $image;
 
     /**
      * @ORM\Column(type="datetime")
@@ -70,11 +72,6 @@ class Article
      */
     private $published;
 
-    /**
-     * @ORM\Column(type="datetime", nullable=true)
-     */
-    private $embargo;
-
     public function __construct()
     {
         $this->comments = new ArrayCollection();
@@ -109,14 +106,14 @@ class Article
         return $this;
     }
 
-    public function getImageUrl(): ?string
+    public function getImage(): ?string
     {
-        return $this->imageUrl;
+        return $this->image;
     }
 
-    public function setImageUrl(?string $imageUrl): self
+    public function setImage(?string $image): self
     {
-        $this->imageUrl = $imageUrl;
+        $this->image = $image;
 
         return $this;
     }
@@ -224,18 +221,6 @@ class Article
     public function setPublished(bool $published): self
     {
         $this->published = $published;
-
-        return $this;
-    }
-
-    public function getEmbargo(): ?\DateTimeInterface
-    {
-        return $this->embargo;
-    }
-
-    public function setEmbargo(\DateTimeInterface $embargo): self
-    {
-        $this->embargo = $embargo;
 
         return $this;
     }

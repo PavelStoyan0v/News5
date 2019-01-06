@@ -10,71 +10,68 @@
 
 {% block content %}
   <div class="bgc-white p-20 bd">
-    <h6 class="c-grey-900">New Article</h6>
+    <h4 class="c-grey-900 h h-article">New Article</h4>
     <div class="mT-30">
-      <form>
+        {{ form_start(form) }}
         <div class="form-row">
           <div class="form-group col-md-12">
-            <label for="title">Title</label>
-            <input name="title" type="text" class="form-control" id="title" placeholder="Who did what?">
+            <label for="article_title">Title</label>
+              {{ form_widget(form.title, {'attr': {'class': 'form-control', 'id': 'title'}}) }}
           </div>
         </div>
         <div class="form-row">
           <div class="form-group col-md-12">
-            <label for="summernote">Article Content</label>
-            <div id="summernote"></div>
+            <label for="article_content">Article Content</label>
+              {{ form_widget(form.content) }}
             <script>
-                $('#summernote').summernote({
+                $('#article_content').summernote({
                     placeholder: 'Your article content',
                     tabsize: 2,
-                    height: 300
+                    height: 300,
+                    toolbar: [
+                        // [groupName, [list of button]]
+                        ['style', ['bold', 'italic', 'underline', 'clear']],
+                        ['font', ['strikethrough', 'superscript', 'subscript']],
+                        ['para', ['ul', 'ol']],
+                        ['insert', ['link', 'video', 'picture']]
+                    ]
                 });
             </script>
           </div>
         </div>
         <div class="form-row">
           <div class="form-group col-md-12">
-            <label for="summary">Short summary for your article</label>
-            <textarea name="summary" class="form-control" id="summary" rows="3"></textarea>
+            <label for="article_summary">Short summary for your article</label>
+              {{ form_widget(form.summary, {'attr': {'class': 'form-control'}}) }}
           </div>
         </div>
         <div class="form-row">
           <div class="form-group col-md-12">
-            <label for="cateogory">Category</label>
-            <select name="category" id="cateogory" class="form-control">
-              <option selected="selected">Choose...</option>
-              {% for category in categories %}
-                <option value="{{ category.id }}">{{ category.name }}</option>
-              {% endfor %}
-            </select>
+            <label for="article_category">Category</label>
+              {{ form_widget(form.category, {'attr': {'class': 'form-control'}}) }}
           </div>
         </div>
         <div class="form-row">
           <div class="form-group col-md-12">
-            <label for="embargo" class="col-form-label">Embargo (Leave default for instant publish)</label>
-            <input class="form-control" type="datetime-local" value="2012-12-12T12:12:00" id="embargo">
-          </div>
-        </div>
-        <div class="form-row">
-          <div class="form-group col-md-12">
-            <label for="thumbnail">Choose a thumbnail for your article</label>
-            <input name="thumbnail" type="file" class="form-control-file" id="thumbnail">
+            <label for="article_image">Choose a thumbnail for your article</label>
+              {{ form_widget(form.image, {'attr': {'class': 'form-control-file'}}) }}
           </div>
         </div>
         <div class="form-group">
           <div class="checkbox checkbox-circle checkbox-info peers ai-c">
-            <input type="checkbox" id="featured" name="featured">
-            <label for="featured" class="peers peer-greed js-sb ai-c">
+              {{ form_widget(form.featured) }}
+            <label for="article_featured" class="peers peer-greed js-sb ai-c">
               <span class="peer peer-greed">Featured</span></label>
           </div>
         </div>
         <div class="form-group">
           <div class="checkbox checkbox-circle checkbox-info peers ai-c">
-            <input checked="checked" type="checkbox" id="published" name="published">
-            <label for="published" class="peers peer-greed js-sb ai-c">
-              <span class="peer peer-greed">Published (Overrides Embargo. Uncheck to be able to publish your article later.)</span></label>
+              {{ form_widget(form.published, {'attr': {'checked': 'checked'}}) }}
+            <label for="article_published" class="peers peer-greed js-sb ai-c">
+              <span class="peer peer-greed">Published (Uncheck to be able to publish your article later.)</span></label>
           </div>
         </div>
+        {{ form_widget(form._token) }}
         <button type="submit" class="btn btn-primary">Submit</button>
       </form>
     </div>
