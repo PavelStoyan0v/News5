@@ -12,11 +12,7 @@
 <meta charset="UTF-8">
 <!-- Site Title -->
 <title>
-  {% if title is defined %}
-     {{ title }}
-  {% else %}
-     News5
-  {% endif %}
+  {% block title %}News5{% endblock title %}
 </title>
 <link href="https://fonts.googleapis.com/css?family=Poppins:100,200,400,300,500,600,700" rel="stylesheet">
 {% include 'common/css.html' %}

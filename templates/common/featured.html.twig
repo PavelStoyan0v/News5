@@ -3,12 +3,14 @@
   <h6 class="title">Featured</h6>
   <div class="editors-pick-post">
     <div class="feature-img-wrap relative">
+      <a href="/article/{{ featured[0].id }}">
       <div class="feature-img relative">
         <div class="overlay overlay-bg"></div>
         <div class="image-div" style="background-image:url({{ image_directory }}{{ featured[0].image }})">
           <img class="img-fluid" src="/img/e1.jpg">
         </div>
       </div>
+      </a>
       <ul class="tags">
         <li><a href="/category/{{ featured[0].category.id }}">{{ featured[0].category.name }}</a></li>
       </ul>

@@ -454,17 +454,17 @@ $(document).ready(function() {
 
     //overlay hover
 
-$(document).ready(function(){
+    $(document).ready(function(){
 
-    $(".top-post-left, .single-top-post, .feature-img-wrap").hover(function() {
-        //mouse in
-        $(this).find(".overlay").stop().animate({
-            backgroundColor: "transparent"
-        }, 300);
-    }, function() {
-        //mouse out
-        $(this).find(".overlay").stop().animate({
-            backgroundColor: "rgba(0, 0, 0, 0.4)"
-        }, 300);
+        $(".top-post-left, .single-top-post, .feature-img-wrap, .feature-img").hover(function() {
+            //mouse in
+            $(this).find(".overlay").stop().animate({
+                backgroundColor: "transparent"
+            }, 300);
+        }, function() {
+            //mouse out
+            $(this).find(".overlay").stop().animate({
+                backgroundColor: "rgba(0, 0, 0, 0.4)"
+            }, 300);
+        });
     });
-});

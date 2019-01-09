@@ -1,100 +1,77 @@
-<!DOCTYPE html>
-<html lang="zxx" class="no-js">
+{% extends "base.html.twig" %}
 
-<head>
-    {{ include('common/head.html.twig') }}
-</head>
+{% block main %}
+    <section class="latest-post-area pb-120" style="margin-top:20px;">
+        <div class="container no-padding">
+            <div class="row">
+                <div class="col-lg-8 post-list">
+                    <!-- Start single-post Area -->
+                    <div class="single-post-wrap">
+                        <div class="content-wrap">
+                            <ul class="tags mt-10">
+                                <li><a href="/category/{{ article.category.id }}">{{ article.category.name }}</a></li>
+                            </ul>
+                            <a href="#">
+                                <h3>{{ article.title }}</h3>
+                            </a>
+                            <ul class="meta pb-20">
+                                <li><a href="#"><span class="lnr lnr-user"></span>{{ article.author.firstName }} {{ article.author.lastName }}</a></li>
+                                <li><span class="lnr lnr-calendar-full"></span>{{ article.date|date("d M H:i") }}</li>
+                                <li><a href="#comments"><span class="lnr lnr-bubble"></span>{{ article.comments|length }} {% if article.comments|length == 1 %} Comment {% else %} Comments {% endif %}</a></li>
+                            </ul>
+                            {{ article.content|raw }}
 
-<body>
-<header>
-
-    {{ include('common/header-top.html') }}
-
-    {{ include('common/logo-wrap.html') }}
-
-    {{ include('common/menu.html.twig') }}
-</header>
-
-<section class="latest-post-area pb-120" style="margin-top:20px;">
-    <div class="container no-padding">
-        <div class="row">
-            <div class="col-lg-8 post-list">
-                <!-- Start single-post Area -->
-                <div class="single-post-wrap">
-                    <div class="content-wrap">
-                        <ul class="tags mt-10">
-                            <li><a href="/category/{{ article.category.id }}">{{ article.category.name }}</a></li>
-                        </ul>
-                        <a href="#">
-                            <h3>{{ article.title }}</h3>
-                        </a>
-                        <ul class="meta pb-20">
-                            <li><a href="#"><span class="lnr lnr-user"></span>{{ article.author.firstName }} {{ article.author.lastName }}</a></li>
-                            <li><span class="lnr lnr-calendar-full"></span>{{ article.date|date("d M H:i") }}</li>
-                            <li><a href="#comments"><span class="lnr lnr-bubble"></span>{{ article.comments|length }} {% if article.comments|length == 1 %} Comment {% else %} Comments {% endif %}</a></li>
-                        </ul>
-                        {{ article.content|raw }}
-
-                        <div class="comment-sec-area">
-                            <div class="container">
-                                <div class="row flex-column">
-                                    <h6>{{ article.comments|length }} {% if article.comments|length == 1 %} Comment {% else %} Comments {% endif %}</h6>
-                                    <div class="comment-list">
-                                        {% for comment in article.comments %}
-                                        <div class="single-comment justify-content-between d-flex" style="padding-bottom: 20px;">
-                                            <div class="user justify-content-between d-flex">
-                                                <div class="desc">
-                                                    <h5><a href="#">{{ comment.name }}</a></h5>
-                                                    <p class="date">{{ comment.date|date("F j, Y") }} at {{ comment.date|date("G:i") }}</p>
-                                                    <p class="comment">
-                                                        {{ comment.content }}
-                                                    </p>
+                            <div class="comment-sec-area">
+                                <div class="container">
+                                    <div class="row flex-column">
+                                        <h6>{{ article.comments|length }} {% if article.comments|length == 1 %} Comment {% else %} Comments {% endif %}</h6>
+                                        <div class="comment-list">
+                                            {% for comment in article.comments %}
+                                                <div class="single-comment justify-content-between d-flex" style="padding-bottom: 20px;">
+                                                    <div class="user justify-content-between d-flex">
+                                                        <div class="desc">
+                                                            <h5><a href="#">{{ comment.name }}</a></h5>
+                                                            <p class="date">{{ comment.date|date("F j, Y") }} at {{ comment.date|date("G:i") }}</p>
+                                                            <p class="comment">
+                                                                {{ comment.content }}
+                                                            </p>
+                                                        </div>
+                                                    </div>
                                                 </div>
-                                            </div>
+                                            {% endfor %}
                                         </div>
-                                        {% endfor %}
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="comment-form">
-                        <h4>Post Comment</h4>
-                        <form>
-                            <div class="form-group form-inline">
-                                <div class="form-group col-lg-6 col-md-12 name">
-                                    <input type="text" class="form-control" id="name" placeholder="Enter Name" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter Name'">
+                        <div class="comment-form">
+                            <h4>Post Comment</h4>
+                            <form>
+                                <div class="form-group form-inline">
+                                    <div class="form-group col-lg-6 col-md-12 name">
+                                        <input type="text" class="form-control" id="name" placeholder="Enter Name" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter Name'">
+                                    </div>
+                                    <div class="form-group col-lg-6 col-md-12 email">
+                                        <input type="email" class="form-control" id="email" placeholder="Enter email address" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter email address'">
+                                    </div>
                                 </div>
-                                <div class="form-group col-lg-6 col-md-12 email">
-                                    <input type="email" class="form-control" id="email" placeholder="Enter email address" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter email address'">
+                                <div class="form-group">
+                                    <textarea class="form-control mb-10" rows="5" name="message" placeholder="Messege" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Messege'" required=""></textarea>
                                 </div>
-                            </div>
-                            <div class="form-group">
-                                <textarea class="form-control mb-10" rows="5" name="message" placeholder="Messege" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Messege'" required=""></textarea>
-                            </div>
-                            <a href="#" class="primary-btn text-uppercase">Post Comment</a>
-                        </form>
+                                <a href="#" class="primary-btn text-uppercase">Post Comment</a>
+                            </form>
+                        </div>
                     </div>
+                    <!-- End single-post Area -->
                 </div>
-                <!-- End single-post Area -->
-            </div>
-            <div class="col-lg-4">
-                <div class="sidebars-area">
-                  {{ include('common/featured.html.twig') }}
-                  {{ include('common/newsletter.html.twig') }}
-                  {{ include('common/social-widget.html') }}
+                <div class="col-lg-4">
+                    <div class="sidebars-area">
+                        {{ include('common/featured.html.twig') }}
+                        {{ include('common/newsletter.html.twig') }}
+                        {{ include('common/social-widget.html') }}
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-</section>
-
-
-
-<!-- start footer Area -->
-{{ include('common/footer.html') }}
-<!-- End footer Area -->
-{{ include('common/js.html') }}
-</body>
-
-</html>
+    </section>
+{% endblock main %}
