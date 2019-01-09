@@ -1,17 +1,21 @@
 # News5
 A SoftUni Project
 
-# Configuration
+### Configuration
 Put your database details in .env
 
-# Installation
+### Installation
+```
 git clone https://github.com/PavelStoyan0v/News5.git
 cd News5
 composer install
 php bin/console doctrine:schema:update --force
+```
 
-# Run in development
+### Run in development
+```
 php bin/console server:run
+```
 
-# Deployment
+### Deployment
 Follow this official guide: https://symfony.com/doc/current/deployment.html
