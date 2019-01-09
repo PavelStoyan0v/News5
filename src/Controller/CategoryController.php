@@ -76,7 +76,7 @@ class CategoryController extends AbstractController
             return $this->redirectToRoute('adminCategories');
         }
 
-        return $this->render('admin/category/new.html.twig',[
+        return $this->render('admin/category/form.html.twig',[
             'form' => $form->createView()
         ]);
     }
@@ -102,7 +102,7 @@ class CategoryController extends AbstractController
             return $this->redirectToRoute('adminCategories');
         }
 
-        return $this->render('admin/category/new.html.twig',[
+        return $this->render('admin/category/form.html.twig',[
             'form' => $form->createView()
         ]);
     }
@@ -111,17 +111,13 @@ class CategoryController extends AbstractController
      * @Route("/admin/categories/delete/{id}")
      * @param $id
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @throws \Exception
      */
     public function delete($id)
     {
         $entityManager = $this->getDoctrine()->getManager();
 
         $category = $this->categoryRepository->find($id);
-
-        if(count($category->getArticles()) > 0) {
-            //category is not empty
-        }
-
         $entityManager->remove($category);
         $entityManager->flush();
 

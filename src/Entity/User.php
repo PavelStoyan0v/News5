@@ -48,11 +48,6 @@ class User implements UserInterface, \Serializable
     private $password;
 
     /**
-     * @ORM\Column(type="text", nullable=true)
-     */
-    private $avatarUrl;
-
-    /**
      * @ORM\Column(type="boolean")
      */
     private $admin;
@@ -132,18 +127,6 @@ class User implements UserInterface, \Serializable
     public function setPassword(string $password): self
     {
         $this->password = $password;
-
-        return $this;
-    }
-
-    public function getAvatarUrl(): ?string
-    {
-        return $this->avatarUrl;
-    }
-
-    public function setAvatarUrl(?string $avatarUrl): self
-    {
-        $this->avatarUrl = $avatarUrl;
 
         return $this;
     }

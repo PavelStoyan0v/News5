@@ -64,13 +64,11 @@ class ArticleController extends AbstractController
      * @Route("/admin/articles/edit/{id}")
      * @param $id
      * @param Request $request
-     * @param UserInterface $user
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
-    public function edit($id, Request $request, UserInterface $user)
+    public function edit($id, Request $request)
     {
         $article = $this->articleRepository->find($id);
-
         $form = $this->createForm(ArticleType::class, $article);
         $form->handleRequest($request);
 
@@ -80,18 +78,11 @@ class ArticleController extends AbstractController
 
             if($file) {
                 $fileName = $this->generateUniqueFileName() . '.' . $file->guessExtension();
-
-                try {
-                    $file->move($this->getParameter('image_directory'), $fileName);
-                } catch (FileException $e) {
-                    // TODO: handle exception
-                }
+                $file->move($this->getParameter('image_directory'), $fileName);
                 $article->setImage($fileName);
             }
 
-
             $article->setDate(new DateTime());
-
 
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($article);
