@@ -5,11 +5,13 @@
   </p>
   <div class="form-group d-flex flex-row">
     <div class="col-autos">
-      <div class="input-group">
-        <input class="form-control" placeholder="Email Address" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Email Address'" type="text">
-      </div>
+      <form method="post" id="newsletter" action="/newsletter">
+        <div class="input-group">
+          <input class="form-control" placeholder="Email Address" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Email Address'" type="text" name="email">
+        </div>
+      </form>
     </div>
-    <a href="/" class="bbtns">Subcribe</a>
+    <a href="#" class="bbtns" onclick="$('#newsletter').submit()">Subcribe</a>
   </div>
   <p>
     You can unsubscribe at any time

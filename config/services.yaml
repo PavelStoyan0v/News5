@@ -6,6 +6,7 @@
 parameters:
     locale: 'en'
     image_directory: '%kernel.project_dir%/public/uploads/images'
+    featured_limit: 4
 
 twig:
     globals:
@@ -16,6 +17,10 @@ services:
     _defaults:
         autowire: true      # Automatically injects dependencies in your services.
         autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
+    App\Repository\ArticleRepository: ~
+    App\Repository\CategoryRepository: ~
+
+
 
     # makes classes in src/ available to be used as services
     # this creates a service per class whose id is the fully-qualified class name

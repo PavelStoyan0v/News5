@@ -35,12 +35,14 @@
     background-size: 105%;
 }
 
-form[name="article"] {
+form[name="article"],
+form[name="category"] {
     max-width: 1000px;
     margin: 0 auto;
 }
 
-form[name="article"] button {
+form[name="article"] button,
+.form-button {
     width: 100%;
     font-size: 110%;
     font-weight: bold;

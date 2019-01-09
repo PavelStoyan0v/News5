@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -15,6 +14,8 @@ class SecurityController extends AbstractController
 {
     /**
      * @Route("/login", name="login")
+     * @param AuthenticationUtils $authenticationUtils
+     * @return Response
      */
     public function login(AuthenticationUtils $authenticationUtils): Response
     {
@@ -28,6 +29,9 @@ class SecurityController extends AbstractController
 
     /**
      * @Route("/register", name="register")
+     * @param Request $request
+     * @param UserPasswordEncoderInterface $passwordEncoder
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
      */
     public function register(Request $request, UserPasswordEncoderInterface $passwordEncoder)
     {

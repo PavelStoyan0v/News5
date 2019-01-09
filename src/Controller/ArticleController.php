@@ -1,11 +1,10 @@
 <?php
-
 namespace App\Controller;
 
-use App\Entity\Category;
-use App\Entity\User;
 use App\Entity\Article;
 use App\Form\ArticleType;
+use App\Repository\ArticleRepository;
+use App\Repository\CategoryRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
@@ -16,23 +15,36 @@ use Symfony\Component\Security\Core\User\UserInterface;
 
 class ArticleController extends AbstractController
 {
+    private $articleRepository;
+    private $categoryRepository;
+    private $categories;
+    private $articles;
+    private $featured;
+
+    public function __construct(ArticleRepository $articleRepository, CategoryRepository $categoryRepository)
+    {
+        $this->articleRepository = $articleRepository;
+        $this->categoryRepository = $categoryRepository;
+
+        $this->articles = $this->articleRepository->findBy([],['date' => 'DESC']);
+        $this->categories = $this->categoryRepository->findAll();
+        $this->featured = $this->articleRepository->findBy(['featured' => true], ['date' => 'DESC'], 4);
+    }
+
     /**
      * @Route("/article/{id}", name="article")
+     * @param $id
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function article($id)
     {
-        $categoryRepository = $this->getDoctrine()->getRepository(Category::class);
-        $categories = $categoryRepository->findAll();
-
-        $articleRepository = $this->getDoctrine()->getRepository(Article::class);
-        $article = $articleRepository->find($id);
-        $featured = $articleRepository->findBy(['featured' => true], ['date' => 'DESC'], 4 /* featured per page TODO: make it into a config file */);
+        $article = $this->articleRepository->find($id);
 
         return $this->render('article/article.html.twig', [
             'controller_name' => 'ArticleController',
             'article' => $article,
-            'categories' => $categories,
-            'featured' => $featured
+            'categories' => $this->categories,
+            'featured' => $this->featured
         ]);
     }
 
@@ -41,8 +53,7 @@ class ArticleController extends AbstractController
      */
     public function adminArticles()
     {
-        $articleRepository = $this->getDoctrine()->getRepository(Article::class);
-        $articles = $articleRepository->findAll();
+        $articles = $this->articleRepository->findAll();
 
         return $this->render('admin/article/articles.html.twig', [
             'articles' => $articles
@@ -51,11 +62,14 @@ class ArticleController extends AbstractController
 
     /**
      * @Route("/admin/articles/edit/{id}")
+     * @param $id
+     * @param Request $request
+     * @param UserInterface $user
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
     public function edit($id, Request $request, UserInterface $user)
     {
-        $articleRepository = $this->getDoctrine()->getRepository(Article::class);
-        $article = $articleRepository->find($id);
+        $article = $this->articleRepository->find($id);
 
         $form = $this->createForm(ArticleType::class, $article);
         $form->handleRequest($request);
@@ -75,6 +89,7 @@ class ArticleController extends AbstractController
                 $article->setImage($fileName);
             }
 
+
             $article->setDate(new DateTime());
 
 
@@ -85,18 +100,19 @@ class ArticleController extends AbstractController
             return $this->redirectToRoute('adminArticles');
         }
 
-        return $this->render('admin/article/article-new.html.twig',[
+        return $this->render('admin/article/edit.html.twig',[
             'form' => $form->createView()
         ]);
     }
 
     /**
      * @Route("/admin/articles/delete/{id}")
+     * @param $id
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function delete($id)
     {
-        $articleRepository = $this->getDoctrine()->getRepository(Article::class);
-        $article = $articleRepository->find($id);
+        $article = $this->articleRepository->find($id);
         $entityManager = $this->getDoctrine()->getManager();
 
         $entityManager->remove($article);
@@ -107,6 +123,9 @@ class ArticleController extends AbstractController
 
     /**
      * @Route("/admin/articles/new")
+     * @param Request $request
+     * @param UserInterface $user
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
     public function new(Request $request, UserInterface $user)
     {
@@ -139,7 +158,7 @@ class ArticleController extends AbstractController
             return $this->redirectToRoute('adminArticles');
         }
 
-        return $this->render('admin/article/article-new.html.twig',[
+        return $this->render('admin/article/new.html.twig',[
             'form' => $form->createView()
         ]);
     }
@@ -149,8 +168,7 @@ class ArticleController extends AbstractController
      */
     public function publish()
     {
-        $articleRepository = $this->getDoctrine()->getRepository(Article::class);
-        $articles = $articleRepository->findBy(['published' => false], ['date' => 'DESC']);
+        $articles = $this->articleRepository->findBy(['published' => false], ['date' => 'DESC']);
 
         return $this->render('admin/article/publish.html.twig', [
             'articles' => $articles
@@ -159,11 +177,12 @@ class ArticleController extends AbstractController
 
     /**
      * @Route("/admin/articles/publish/{id}")
+     * @param $id
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function publishArticle($id) {
         $entityManager = $this->getDoctrine()->getManager();
-        $articleRepository = $this->getDoctrine()->getRepository(Article::class);
-        $article = $articleRepository->find($id);
+        $article = $this->articleRepository->find($id);
 
         $article->setPublished(true);
 
