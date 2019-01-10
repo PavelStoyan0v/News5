@@ -11,12 +11,17 @@
         <ul>
           <li>
             {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+              {% if is_granted('ROLE_ADMIN') %}
               <a class="link" href="{{ path('admin') }}">Admin Panel</a>
               </li>
               <li>
+                {% endif %}
               <a class="link" href="{{ path('logout') }}">Logout</a>
             {% else %}
               <a class="link" href="{{ path('login') }}">Login</a>
+              </li>
+          <li>
+            <a class="link" href="{{ path('register') }}">Register</a>
             {% endif %}
           </li>
           <li><a href="tel:+440 012 3654 896"><i class="fas fa-phone-volume"></i> <span>0800 72800</span></a></li>

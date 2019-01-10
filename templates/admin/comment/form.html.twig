@@ -1,0 +1,31 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block content %}
+    <div class="bgc-white p-20 bd">
+        <h4 class="c-grey-900 h h-article">Editing Comment</h4>
+        <div class="mT-30">
+            {{ form_start(form) }}
+            <div class="form-row">
+                <div class="form-group col-md-12">
+                    <label for="comment_name">Name</label>
+                    {{ form_widget(form.name, {'attr': {'class': 'form-control', 'id': 'name'}}) }}
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-12">
+                    <label for="comment_email">Name</label>
+                    {{ form_widget(form.email, {'attr': {'class': 'form-control', 'id': 'name'}}) }}
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-12">
+                    <label for="comment_content">Content</label>
+                    {{ form_widget(form.content, {'attr': {'class': 'form-control', 'id': 'name'}}) }}
+                </div>
+            </div>
+            {{ form_widget(form._token) }}
+            <button type="submit" class="btn btn-primary form-button">Submit</button>
+            </form>
+        </div>
+    </div>
+{% endblock content %}

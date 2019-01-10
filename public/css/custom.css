@@ -36,7 +36,8 @@
 }
 
 form[name="article"],
-form[name="category"] {
+form[name="category"],
+form[name="comment"] {
     max-width: 1000px;
     margin: 0 auto;
 }

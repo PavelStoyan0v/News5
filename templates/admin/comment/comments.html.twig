@@ -1,0 +1,58 @@
+{% extends "admin/base.html.twig" %}
+
+{% block main %}
+    <main class="main-content bgc-grey-100">
+        <div id="mainContent">
+            <div class="container-fluid">
+                <h4 class="c-grey-900 mT-10 mB-30">Comments</h4>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="bgc-white bd bdrs-3 p-20 mB-20">
+                            <div style="width: 100%; height: 51px">
+                                <h4 style="float: left" class="c-grey-900 mB-20">All Comments</h4>
+                            </div>
+                            <table id="dataTable" class="table table-striped table-bordered" cellspacing="0" width="100%">
+                                <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Email</th>
+                                    <th>Article id</th>
+                                    <th>Content</th>
+                                    <th>Date</th>
+                                    <th>Actions</th>
+                                </tr>
+                                </thead>
+                                <tfoot>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Email</th>
+                                    <th>Article id</th>
+                                    <th>Content</th>
+                                    <th>Date</th>
+                                    <th>Actions</th>
+                                </tr>
+                                </tfoot>
+                                <tbody>
+                                {% for comment in comments %}
+                                    <tr>
+                                        <td>{{ comment.name }}</td>
+                                        <td>{{ comment.email }}</td>
+                                        <td>{{ comment.article.id }}</td>
+                                        <td>{{ comment.content }}</td>
+                                        <td>{{ comment.date|date("d\.m\.Y G\:i") }}</td>
+                                        <td>
+                                            <a href="/admin/comments/edit/{{ comment.id }}"><button type="button" class="btn cur-p btn-outline-primary">Edit</button></a>
+                                            <button type="button" class="btn cur-p btn-outline-danger" data-toggle="modal" data-target="#delete{{ comment.id }}">Delete</button>
+                                            <div class="modal fade" id="delete{{ comment.id }}" tabindex="-1" role="dialog" aria-labelledby="deleteLabel" style="display: none;" aria-hidden="true"><div class="modal-dialog" role="document"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="exampleModalLabel">Confirm you want to delete the comment?</h5><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button></div><div class="modal-body">Once you delete it there is no way to get it back.</div><div class="modal-footer"><button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button><a href="/admin/comments/delete/{{ comment.id }}"><button type="button" class="btn cur-p btn-outline-danger">Delete</button></a></div></div></div></div>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+{% endblock main %}
