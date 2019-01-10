@@ -46,19 +46,20 @@
                         </div>
                         <div class="comment-form">
                             <h4>Post Comment</h4>
-                            <form>
+                            {{ form_start(form) }}
                                 <div class="form-group form-inline">
                                     <div class="form-group col-lg-6 col-md-12 name">
-                                        <input type="text" class="form-control" id="name" placeholder="Enter Name" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter Name'">
+                                        {{ form_widget(form.name, {'attr': {'class': 'form-control', 'id': 'name', 'placeholder': 'Enter Name'}}) }}
                                     </div>
                                     <div class="form-group col-lg-6 col-md-12 email">
-                                        <input type="email" class="form-control" id="email" placeholder="Enter email address" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter email address'">
+                                        {{ form_widget(form.email, {'attr': {'class': 'form-control', 'id': 'name', 'placeholder': 'Enter email address'}}) }}
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <textarea class="form-control mb-10" rows="5" name="message" placeholder="Messege" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Messege'" required=""></textarea>
+                                    {{ form_widget(form.content, {'attr': {'class': 'form-control', 'id': 'name', 'placeholder': 'Message'}}) }}
                                 </div>
-                                <a href="#" class="primary-btn text-uppercase">Post Comment</a>
+                                {{ form_widget(form._token) }}
+                                <button type="submit" class="primary-btn text-uppercase">Post Comment</button>
                             </form>
                         </div>
                     </div>
