@@ -27,7 +27,7 @@ class NewsletterController extends AbstractController
                 $em->persist($newsletterEntry);
                 $em->flush();
 
-                return new Response('ok');
+                return $this->redirecttoRoute('homepage');
             } catch(\Exception $e) {
                 $logger->error($e->getMessage());
                 return new Response('Something went wrong, try again later!');
