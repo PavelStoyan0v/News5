@@ -89,6 +89,7 @@ class CategoryController extends AbstractController
      */
     public function edit(Request $request, $id)
     {
+        //test
         $category = $this->categoryRepository->find($id);
 
         $form = $this->createForm(CategoryType::class, $category);
